@@ -67,15 +67,15 @@
             </div>
             
             <div class="flex items-center gap-x-3">
-                <button onclick="donateNow()" 
-                        class="hidden sm:flex items-center gap-x-2 px-5 py-2.5 text-sm font-medium border border-slate-300 hover:border-slate-400 rounded-2xl transition">
+                <a href="confirm-donation.html"
+                   class="hidden sm:flex items-center gap-x-2 px-5 py-2.5 text-sm font-medium border border-slate-300 hover:border-slate-400 rounded-2xl transition">
                     <i class="fa-solid fa-heart text-red-500"></i>
                     <span>Donate</span>
-                </button>
-                <button onclick="donateNow()" 
-                        class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm rounded-2xl transition">
+                </a>
+                <a href="confirm-donation.html"
+                   class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm rounded-2xl transition">
                     Join Us
-                </button>
+                </a>
                 
                 <!-- Mobile Hamburger -->
                 <button id="mobile-menu-button" class="md:hidden w-10 h-10 flex items-center justify-center text-2xl">
@@ -91,9 +91,9 @@
                 <a href="#" class="hover:text-brand-600 transition">Impact</a>
                 <a href="#" class="hover:text-brand-600 transition">Transparency</a>
                 <a href="#" class="hover:text-brand-600 transition">Stories</a>
-                <button onclick="donateNow()" class="mt-4 w-full py-4 bg-brand-600 text-white rounded-2xl">
+                <a href="confirm-donation.html" class="mt-4 w-full py-4 bg-brand-600 text-white rounded-2xl text-center">
                     Donate Now
-                </button>
+                </a>
             </div>
         </div>
     </header>
@@ -114,12 +114,12 @@
             </p>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10 px-4">
-                <button onclick="donateNow()" 
-                        class="px-8 py-4 bg-white text-brand-900 font-semibold rounded-3xl text-lg hover:bg-white/90 transition shadow-xl">
+                <a href="confirm-donation.html"
+                   class="px-8 py-4 bg-white text-brand-900 font-semibold rounded-3xl text-lg hover:bg-white/90 transition shadow-xl text-center">
                     Fund Impact Today
-                </button>
+                </a>
                 <a href="#initiatives" 
-                   class="px-8 py-4 border border-white/70 hover:bg-white/10 font-medium rounded-3xl text-lg transition">
+                   class="px-8 py-4 border border-white/70 hover:bg-white/10 font-medium rounded-3xl text-lg transition text-center">
                     Explore Initiatives
                 </a>
             </div>
@@ -152,7 +152,8 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-            <!-- Cards remain the same but with better responsive padding -->
+            
+            <!-- Card 1: Educational Equity -->
             <div class="bg-white rounded-3xl overflow-hidden card-hover border border-slate-100">
                 <div class="relative">
                     <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=800" 
@@ -163,7 +164,7 @@
                 </div>
                 <div class="p-6 md:p-8">
                     <h3 class="text-2xl font-semibold mb-3">Educational Equity</h3>
-                    <p class="text-slate-600 text-[15px] leading-relaxed">Solar-powered tablets and offline AI tutors for remote students.</p>
+                    <p class="text-slate-600 text-[15px] leading-relaxed">Solar-powered tablets and offline AI tutors for remote students in underserved regions.</p>
                     
                     <div class="mt-8">
                         <div class="flex justify-between text-xs font-medium text-slate-500 mb-2.5">
@@ -175,17 +176,14 @@
                         </div>
                     </div>
                     
-                    <button onclick="supportInitiative(this)" 
-                            class="mt-8 w-full py-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-2xl transition">
+                    <a href="confirm-donation.html"
+                       class="mt-8 block w-full py-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-2xl transition text-center">
                         Support This Initiative
-                    </button>
+                    </a>
                 </div>
             </div>
 
-            <!-- Repeat similar structure for other 3 cards (abbreviated for brevity) -->
-            <!-- Card 2, 3, 4 follow the exact same responsive pattern -->
-            <!-- ... (I kept the other 3 cards identical in structure to the first one for consistency) -->
-
+            <!-- Card 2: Sustainable Forestry -->
             <div class="bg-white rounded-3xl overflow-hidden card-hover border border-slate-100">
                 <div class="relative">
                     <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=800" 
@@ -196,7 +194,7 @@
                 </div>
                 <div class="p-6 md:p-8">
                     <h3 class="text-2xl font-semibold mb-3">Sustainable Forestry</h3>
-                    <p class="text-slate-600 text-[15px] leading-relaxed">Community-led reforestation and biodiversity projects.</p>
+                    <p class="text-slate-600 text-[15px] leading-relaxed">Community-led reforestation, agroforestry, and biodiversity protection projects.</p>
                     
                     <div class="mt-8">
                         <div class="flex justify-between text-xs font-medium text-slate-500 mb-2.5">
@@ -208,15 +206,73 @@
                         </div>
                     </div>
                     
-                    <button onclick="supportInitiative(this)" 
-                            class="mt-8 w-full py-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-2xl transition">
+                    <a href="confirm-donation.html"
+                       class="mt-8 block w-full py-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-2xl transition text-center">
                         Support This Initiative
-                    </button>
+                    </a>
                 </div>
             </div>
 
-            <!-- Cards 3 & 4 follow the same pattern -->
-            <!-- (Omitted here for space - copy the structure above) -->
+            <!-- Card 3: Clean Water Access -->
+            <div class="bg-white rounded-3xl overflow-hidden card-hover border border-slate-100">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1543679926-7f4c3e2b5c3e?q=80&w=800" 
+                         class="w-full aspect-video md:aspect-[16/10] object-cover" alt="Clean Water">
+                    <div class="absolute top-4 right-4 bg-white/95 backdrop-blur px-4 py-1.5 rounded-2xl text-xs font-semibold shadow flex items-center gap-x-1.5">
+                        <span class="text-emerald-500">●</span> 57% FUNDED
+                    </div>
+                </div>
+                <div class="p-6 md:p-8">
+                    <h3 class="text-2xl font-semibold mb-3">Clean Water Access</h3>
+                    <p class="text-slate-600 text-[15px] leading-relaxed">Deep wells, rainwater harvesting systems, and water purification for rural communities.</p>
+                    
+                    <div class="mt-8">
+                        <div class="flex justify-between text-xs font-medium text-slate-500 mb-2.5">
+                            <span>$45,600 raised</span>
+                            <span>$80,000 goal</span>
+                        </div>
+                        <div class="h-2 bg-slate-100 rounded-full">
+                            <div class="progress-bar bg-gradient-to-r from-brand-600 to-blue-500 h-2 rounded-full w-[57%]"></div>
+                        </div>
+                    </div>
+                    
+                    <a href="confirm-donation.html"
+                       class="mt-8 block w-full py-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-2xl transition text-center">
+                        Support This Initiative
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 4: Maternal & Child Health -->
+            <div class="bg-white rounded-3xl overflow-hidden card-hover border border-slate-100">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1584515933487-0a0a6c4c8c3f?q=80&w=800" 
+                         class="w-full aspect-video md:aspect-[16/10] object-cover" alt="Maternal Health">
+                    <div class="absolute top-4 right-4 bg-white/95 backdrop-blur px-4 py-1.5 rounded-2xl text-xs font-semibold shadow flex items-center gap-x-1.5">
+                        <span class="text-emerald-500">●</span> 82% FUNDED
+                    </div>
+                </div>
+                <div class="p-6 md:p-8">
+                    <h3 class="text-2xl font-semibold mb-3">Maternal & Child Health</h3>
+                    <p class="text-slate-600 text-[15px] leading-relaxed">Mobile clinics, nutrition programs, and training for midwives in high-risk areas.</p>
+                    
+                    <div class="mt-8">
+                        <div class="flex justify-between text-xs font-medium text-slate-500 mb-2.5">
+                            <span>$77,900 raised</span>
+                            <span>$95,000 goal</span>
+                        </div>
+                        <div class="h-2 bg-slate-100 rounded-full">
+                            <div class="progress-bar bg-gradient-to-r from-brand-600 to-blue-500 h-2 rounded-full w-[82%]"></div>
+                        </div>
+                    </div>
+                    
+                    <a href="confirm-donation.html"
+                       class="mt-8 block w-full py-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-2xl transition text-center">
+                        Support This Initiative
+                    </a>
+                </div>
+            </div>
+
         </div>
     </main>
 
@@ -225,10 +281,10 @@
         <div class="max-w-xl mx-auto text-center px-5">
             <h2 class="text-4xl md:text-5xl font-semibold tracking-tighter heading-font">Every dollar creates measurable change</h2>
             <p class="mt-4 text-white/70">Join thousands supporting evidence-based solutions.</p>
-            <button onclick="donateNow()" 
-                    class="mt-8 px-10 py-5 bg-white text-brand-900 font-semibold text-lg rounded-3xl hover:scale-105 active:scale-95 transition">
+            <a href="confirm-donation.html"
+               class="mt-8 inline-block px-10 py-5 bg-white text-brand-900 font-semibold text-lg rounded-3xl hover:scale-105 active:scale-95 transition">
                 Donate Now →
-            </button>
+            </a>
         </div>
     </div>
 
@@ -263,22 +319,6 @@
             }
         });
 
-        function donateNow() {
-            alert("Thank you! In a real implementation this would open a secure donation flow.");
-        }
-
-        function supportInitiative(btn) {
-            const originalText = btn.innerHTML;
-            btn.style.transition = 'all 0.3s';
-            btn.innerHTML = `✓ Thank you!`;
-            btn.style.backgroundColor = '#10b981';
-            
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.style.backgroundColor = '';
-            }, 2500);
-        }
-
         // Animate progress bars when visible
         function animateBars() {
             document.querySelectorAll('.progress-bar').forEach(bar => {
@@ -292,3 +332,4 @@
     </script>
 </body>
 </html>
+```​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
