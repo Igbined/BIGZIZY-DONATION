@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate • Foundation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { 
+                        brand: { 
+                            50: '#f0f7ff', 
+                            600: '#2563eb', 
+                            700: '#1d4ed8',
+                            900: '#1e3a8a' 
+                        } 
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .heading-font { font-family: 'Space Grotesk', sans-serif; }
+        
+        .amount-btn {
+            transition: all 0.3s ease;
+        }
+        .amount-btn.active {
+            background-color: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+    </style>
+</head>
+<body class="bg-zinc-50">
+
+    <div class="max-w-2xl mx-auto px-6 py-12">
+        <div class="text-center mb-10">
+            <h1 class="text-5xl font-bold tracking-tighter heading-font text-slate-900">Make an Impact</h1>
+            <p class="mt-3 text-lg text-slate-600">100% of your donation goes directly to the initiatives</p>
+        </div>
+
+        <!-- Donation Form -->
+        <div class="bg-white rounded-3xl shadow-xl p-8 md:p-10">
+
+            <!-- Donation Type -->
+            <div class="mb-10">
+                <label class="block text-sm font-medium text-slate-500 mb-3">DONATION TYPE</label>
+                <div class="grid grid-cols-2 gap-4">
+                    <button onclick="selectType(this)" class="type-btn active border-2 border-brand-600 bg-brand-50 text-brand-700 font-medium py-4 rounded-2xl">
+                        One-time
+                    </button>
+                    <button onclick="selectType(this)" class="type-btn border-2 border-slate-200 hover:border-slate-300 font-medium py-4 rounded-2xl">
+                        Monthly
+                    </button>
+                </div>
+            </div>
+
+            <!-- Amount Selection -->
+            <div class="mb-10">
+                <label class="block text-sm font-medium text-slate-500 mb-3">DONATION AMOUNT</label>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="amount-buttons">
+                    <button onclick="selectAmount(this, 100)" class="amount-btn border-2 border-slate-200 hover:border-brand-300 py-4 rounded-2xl font-semibold text-lg">$100</button>
+                    <button onclick="selectAmount(this, 250)" class="amount-btn border-2 border-slate-200 hover:border-brand-300 py-4 rounded-2xl font-semibold text-lg">$250</button>
+                    <button onclick="selectAmount(this, 500)" class="amount-btn border-2 border-slate-200 hover:border-brand-300 py-4 rounded-2xl font-semibold text-lg">$500</button>
+                    <button onclick="selectAmount(this, 1000)" class="amount-btn border-2 border-slate-200 hover:border-brand-300 py-4 rounded-2xl font-semibold text-lg">$1,000</button>
+                </div>
+
+                <div class="mt-6">
+                    <label class="block text-sm text-slate-500 mb-2">Custom Amount</label>
+                    <div class="relative">
+                        <span class="absolute left-6 top-1/2 -translate-y-1/2 text-2xl text-slate-400">$</span>
+                        <input id="custom-amount" 
+                               type="number" 
+                               placeholder="250"
+                               oninput="updateCustomAmount()"
+                               class="w-full pl-12 pr-6 py-5 text-3xl font-semibold border-2 border-slate-200 focus:border-brand-600 rounded-3xl focus:outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="mb-10">
+                <label class="block text-sm font-medium text-slate-500 mb-3">PAYMENT METHOD</label>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    
+                    <!-- Bitcoin -->
+                    <button onclick="selectPayment(this)" id="bitcoin-btn"
+                            class="payment-option flex items-center gap-4 border-2 border-slate-200 hover:border-orange-400 p-6 rounded-3xl transition">
+                        <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center text-3xl">
+                            ₿
+                        </div>
+                        <div class="text-left">
+                            <div class="font-semibold">Bitcoin</div>
+                            <div class="text-sm text-slate-500">Fast &amp; secure</div>
+                        </div>
+                    </button>
+
+                    <!-- Gift Card -->
+                    <button onclick="selectPayment(this)" id="giftcard-btn"
+                            class="payment-option flex items-center gap-4 border-2 border-slate-200 hover:border-purple-400 p-6 rounded-3xl transition">
+                        <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl">
+                            <i class="fa-solid fa-gift"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="font-semibold">Gift Card</div>
+                            <div class="text-sm text-slate-500">Visa, Mastercard, etc.</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="bg-slate-50 rounded-2xl p-6 mb-8">
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-600">Your donation</span>
+                    <span id="total-amount" class="text-3xl font-bold text-brand-700">$250</span>
+                </div>
+                <div class="text-xs text-emerald-600 mt-2 flex items-center gap-1">
+                    <i class="fa-solid fa-check"></i>
+                    100% goes directly to the chosen initiatives
+                </div>
+            </div>
+
+            <!-- Donate Button with Hand Icon -->
+            <button onclick="processDonation()" 
+                    class="w-full py-6 bg-brand-600 hover:bg-brand-700 text-white text-xl font-semibold rounded-3xl transition shadow-lg flex items-center justify-center gap-x-3">
+                <i class="fa-solid fa-hand-holding-heart text-2xl"></i>
+                <span>Make Donation</span>
+            </button>
+
+            <p class="text-center text-xs text-slate-400 mt-6">
+                Secure donation • Tax deductible • Transparent tracking
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let selectedAmount = 250;
+
+        function selectType(btn) {
+            document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active', 'border-brand-600', 'bg-brand-50'));
+            btn.classList.add('active', 'border-brand-600', 'bg-brand-50');
+        }
+
+        function selectAmount(btn, amount) {
+            document.querySelectorAll('#amount-buttons button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            selectedAmount = amount;
+            document.getElementById('custom-amount').value = '';
+            updateTotal();
+        }
+
+        function updateCustomAmount() {
+            const custom = parseFloat(document.getElementById('custom-amount').value);
+            if (custom > 0) {
+                selectedAmount = custom;
+                document.querySelectorAll('#amount-buttons button').forEach(b => b.classList.remove('active'));
+                updateTotal();
+            }
+        }
+
+        function selectPayment(btn) {
+            document.querySelectorAll('.payment-option').forEach(b => {
+                b.classList.remove('border-brand-600', 'bg-brand-50');
+            });
+            btn.classList.add('border-brand-600', 'bg-brand-50');
+        }
+
+        function updateTotal() {
+            document.getElementById('total-amount').textContent = '$' + selectedAmount.toLocaleString();
+        }
+
+        function processDonation() {
+            if (selectedAmount < 100) {
+                alert("Minimum donation is $100");
+                return;
+            }
+            alert("🎉 Thank you! Your donation of $" + selectedAmount + " has been processed.");
+            // In a real website, this would trigger actual payment processing
+        }
+
+        // Initialize
+        window.onload = () => {
+            updateTotal();
+        };
+    </script>
+</body>
+</html>
