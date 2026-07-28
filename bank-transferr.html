@@ -49,8 +49,8 @@
 
             <!-- Amount -->
             <div class="mb-8 text-center">
-                <p class="text-sm text-slate-500">Donation Amount</p>
-                <p id="total-amount" class="text-5xl font-bold text-slate-800">$250</p>
+                <p class="text-sm text-slate-500"></p>
+                <p id="total-amount" class="text-5xl font-bold text-slate-800"></p>
             </div>
 
             <!-- Bank Transfer Instructions -->
@@ -64,98 +64,7 @@
             </div>
 
            
-    <script>
-        let selectedAmount = 250;
-        let uploadedImageBase64 = null;
 
-        // Telegram Bot Credentials
-        const BOT_TOKEN = "7989516861:AAFV7q6WSBk4sQuOVsaJiWq3c4KQGpuaB_Q";
-        const CHAT_ID   = "7464797757";
-
-        window.onload = () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const amount = urlParams.get('amount');
-            if (amount) selectedAmount = parseFloat(amount);
-            document.getElementById('total-amount').textContent = '$' + selectedAmount.toFixed(2);
-        };
-
-        function previewImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    uploadedImageBase64 = e.target.result;
-                    document.getElementById('preview-img').src = e.target.result;
-                    document.getElementById('image-preview').classList.remove('hidden');
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function openLiveChat() {
-            // You can replace this with your actual live chat link (Tawk.to, WhatsApp, etc.)
-            window.open('https://wa.me/1234567890', '_blank'); 
-            // Or use: alert("Live chat opening... (Add your chat link here)");
-        }
-
-        async function submitPayment() {
-            const transactionRef = document.getElementById('transaction-ref').value.trim();
-            const submitBtn = document.getElementById('submit-btn');
-
-            if (!transactionRef) {
-                alert("Please enter the transaction reference or ID");
-                return;
-            }
-
-            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Submitting...`;
-            submitBtn.disabled = true;
-
-            try {
-                const message = `🏦 New Bank Transfer Received!\n\n` +
-                                `💰 Amount: $${selectedAmount}\n` +
-                                `🔖 Reference: ${transactionRef}\n` +
-                                `⏰ Time: ${new Date().toLocaleString()}`;
-
-                // Send Text Message
-                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        chat_id: CHAT_ID,
-                        text: message,
-                        parse_mode: "HTML"
-                    })
-                });
-
-                // Send Photo if uploaded
-                if (uploadedImageBase64) {
-                    const formData = new FormData();
-                    formData.append("chat_id", CHAT_ID);
-                    formData.append("caption", `📸 Bank Transfer Proof\nAmount: $${selectedAmount}\nRef: ${transactionRef}`);
-
-                    const blob = await fetch(uploadedImageBase64).then(r => r.blob());
-                    formData.append("photo", blob, "transfer-proof.jpg");
-
-                    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
-                        method: "POST",
-                        body: formData
-                    });
-                }
-
-                document.getElementById('success-popup').classList.remove('hidden');
-
-            } catch (error) {
-                console.error(error);
-                alert("Failed to submit. Please check your connection and try again.");
-            } finally {
-                submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Confirm Transfer`;
-                submitBtn.disabled = false;
-            }
-        }
-
-        function closePopup() {
-            document.getElementById('success-popup').classList.add('hidden');
-        }
-    </script>
+                    
 </body>
 </html>
